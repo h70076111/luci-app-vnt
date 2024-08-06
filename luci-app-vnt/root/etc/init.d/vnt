@@ -15,7 +15,7 @@ start_vntcli() {
                    clibin=/tmp/vnt-cli
                 fi
                 echo "$(date '+%Y-%m-%d %H:%M:%S') vnt : vnt-cli_${cpucore}开始启动" >>/tmp/vnt-cli.log
-                [ -z "`opkg list-installed | grep kmod-tun`" ] && echo "$(date '+%Y-%m-%d %H:%M:%S') vnt : 未安装kmod-tun模块，开始安装..." >>/tmp/vnt-cli.log && opkg update && opkg install kmod-tun
+                [ -z "`opkg list-installed | grep kmod-tun`" ] && echo "$(date '+%Y-%m-%d %H:%M:%S') vnt : 未安装kmod-tun模块，	请确定安装好kmod-tun " >>/tmp/vnt-cli.log 
                 path=$(dirname "$clibin")
                 if [ -f /tmp/vnt-cli ] && [ "${path:0:4}" != "/tmp" ] ;then
                    chmod +x /tmp/vnt-cli
@@ -53,8 +53,8 @@ start_vntcli() {
                 pgrep -f vnt_check | xargs kill -9 >/dev/null 2>&1
                 ps | grep 'vnt-cli' | grep -v grep | awk '{print $1}' | xargs kill >/dev/null 2>&1
                 ps | grep 'vnt-cli' | grep -v grep | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
-		local token mode ipaddr mtu desvice_id localadd log comp
-		local peeradd desvice_name vntshost stunhost checkip mapping
+		local token mode ipaddr mtu desvice_id localadd log comp local_ipv4
+		local peeradd desvice_name vntshost stunhost checkip mapping disable_stats
 		local punch client_port par key forward serverw vntdns allow_wg
 		local finger relay first_latency tunname tunmode passmode
 		config_get token "$cfg" 'token'
@@ -62,6 +62,7 @@ start_vntcli() {
                 config_get desvice_id "$cfg" 'desvice_id'
                 config_get desvice_name "$cfg" 'desvice_name'
                 config_get vntshost "$cfg" 'vntshost'
+                config_get local_ipv4 "$cfg" 'local_ipv4'
 #以下解析IP4P地址的脚本由恩山大佬liaohcai提供
 if [ ! -n "`echo $vntshost | grep ':'`" ] && [ ! -z "$vntshost" ] ;then
 	eval $(nslookup $vntshost 223.5.5.5 | awk '/2001/' |cut -d ':' -f 2-6 | awk -F: '{print "port="$3" ipa="$4" ipb="$5 }')
@@ -132,6 +133,7 @@ fi
 		config_get_bool finger "$cfg" 'finger' '0'
 		config_get_bool first_latency "$cfg" 'first_latency' '0'
                 config_get_bool log "$cfg" 'log' '0'
+                config_get_bool disable_stats "$cfg" 'disable_stats' '0'
                 config_get_bool allow_wg "$cfg" 'allow_wg' '0'
                 config_get checkip "$cfg" 'checkip'
                 config_get comp "$cfg" 'comp'
@@ -230,6 +232,7 @@ EOF
                 fi
 		[ -z "$par" ] || procd_append_param command --par "$par"
 		[ -z "$tunname" ] || procd_append_param command --nic "$tunname"
+                [ -z "$local_ipv4" ] || procd_append_param command --local-ipv4 "$local_ipv4"
 		[ "$punch" = "ipv4/ipv6" ] || procd_append_param command --punch "$punch"
 		[ "$passmode" != "off" ] && [ -n "$key" ] && procd_append_param command --model "$passmode"
 		[ "$passmode" != "off" ] && [ -n "$key" ] && procd_append_param command -w "$key"
@@ -238,6 +241,7 @@ EOF
 		[ "$forward" = "0" ] || procd_append_param command --no-proxy
 		[ "$finger" = "0" ] || procd_append_param command --finger
 		[ "$serverw" = "0" ] || procd_append_param command -W
+                [ "$disable_stats" = "1" ] || procd_append_param command --disable-stats
 		[ "$first_latency" = "0" ] || procd_append_param command --first-latency
                 [ "$relay" = "转发" ] && procd_append_param command --use-channel relay
                 [ "$relay" = "P2P" ] && procd_append_param command --use-channel p2p
@@ -256,7 +260,7 @@ EOF
                 else
                    vnt_tun="$tunname"
                 fi 
-                if [ ! -z "$client_port" ] && [ "$tcp" = "tcp" ] ; then
+                if [ ! -z "$client_port" ] ; then
                    if [ ! -z "$(echo $client_port | grep ',' )" ] ; then
 	              vnt_tcp_port="${client_port%%,*}"
 	           else
@@ -580,8 +584,8 @@ start_service() {
            [ "$mipstype" = "0" ] && cpucore="mips" || cpucore="mipsle"
         fi
         
-        [ -z "`opkg list-installed | grep curl`" ] && opkg update && opkg install curl
-        [ -z "`opkg list-installed | grep luci-lib-fs`" ] && opkg update && opkg install luci-lib-fs
+        [ -z "`opkg list-installed | grep curl`" ] && echo "$(date '+%Y-%m-%d %H:%M:%S') vnt : 未安装curl，请确定安装好curl " >>/tmp/vnt-cli.log 
+        [ -z "`opkg list-installed | grep luci-lib-fs`" ] && echo "$(date '+%Y-%m-%d %H:%M:%S') vnt : 未安装luci-lib-fs，请确定安装好luci-lib-fs " >>/tmp/vnt-cli.log 
 	config_foreach start_vntcli 'vnt-cli'
 	config_foreach start_vnts 'vnts'
 }
