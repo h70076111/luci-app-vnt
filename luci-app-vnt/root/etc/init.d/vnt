@@ -305,7 +305,7 @@ EOF
 		[ "$forward" = "0" ] || sysctl -w net.ipv4.ip_forward=1 >/dev/null 2>&1
                 [ ! -z "$checkip" ] && check
                 echo `date +%s` > /tmp/vnt_time
-                echo "$(date '+%Y-%m-%d %H:%M:%S') 若启动失败请前往 状态-系统日志 查看具体原因 " >>/tmp/vnt-cli.log
+                
 }
 
 check () {
