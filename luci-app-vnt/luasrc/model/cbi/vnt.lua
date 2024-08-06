@@ -147,8 +147,8 @@ par = s:taboption("privacy",Value, "par", translate("并行任务数"),
 	translate("默认留空，任务并行度(必须为正整数),默认值为1,该值表示处理网卡读写的任务数,组网设备数较多、处理延迟较大时可适当调大此值"))
 par.placeholder = "2"
 
-punch = s:taboption("privacy",ListValue, "punch", translate("IPV4/IPV6"),
-	translate("选择只使用ipv4打洞或者只使用ipv6打洞，默认两则都会使用,ipv6相对于ipv4速率可能会有所降低，ipv6更容易打通直连"))
+punch = s:taboption("privacy",ListValue, "punch", translate("打洞模式"),
+	translate("选择只使用ipv4打洞或者只使用ipv6打洞，all都会使用,ipv6相对于ipv4速率可能会有所降低，ipv6更容易打通直连"))
 punch:value("all")
 punch:value("ipv4")
 punch:value("ipv6")
