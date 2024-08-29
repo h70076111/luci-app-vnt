@@ -168,6 +168,7 @@ passmode:value("xor")
 key = s:taboption("privacy",Value, "key", translate("加密密钥"),
 	translate("先开启上方的加密模式再填写密钥才能生效，使用相同密钥的客户端才能通信，服务端无法解密(包括中继转发数据)"))
 key.placeholder = "wodemima"
+key.password = true
 key:depends("passmode", "aes_ecb")
 key:depends("passmode", "sm4_cbc")
 key:depends("passmode", "sm4_cbc")
