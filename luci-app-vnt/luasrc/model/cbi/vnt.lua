@@ -52,9 +52,10 @@ switch.write = function(self, section, value)
     return Flag.write(self, section, value)
 end
 
-mode = s:taboption("general",ListValue, "mode", translate("接口模式"))
-mode:value("dhcp")
-mode:value("static")
+mode = s:taboption("general",ListValue, "mode", translate("接口模式"),
+	translate("动态分配将由服务器随机分配一个未使用的ip地址，重启程序可能导致ip变化，建议手动指定ip并指定设备ID"))
+mode:value("dhcp",translate("动态分配"))
+mode:value("static",translate("手动指定"))
 
 ipaddr = s:taboption("general",Value, "ipaddr", translate("接口IP地址"),
 	translate("每个vnt-cli客户端的接口IP不能相同"))
@@ -139,23 +140,23 @@ mtu.placeholder = "1300"
 
 punch = s:taboption("privacy",ListValue, "punch", translate("打洞模式"),
 	translate("选择只使用ipv4打洞或者只使用ipv6打洞，all都会使用,ipv6相对于ipv4速率可能会有所降低，ipv6更容易打通直连"))
-punch:value("all")
-punch:value("ipv4")
-punch:value("ipv6")
-punch:value("ipv4-tcp")
-punch:value("ipv6-tcp")
-punch:value("ipv4-udp")
-punch:value("ipv6-udp")
+punch:value("all",translate("都使用"))
+punch:value("ipv4",translate("仅ipv4-tcp/udp"))
+punch:value("ipv6",translate("仅ipv6-tcp/udp"))
+punch:value("ipv4-tcp",translate("仅ipv4-tcp"))
+punch:value("ipv6-tcp",translate("仅ipv6-tcp"))
+punch:value("ipv4-udp",translate("仅ipv4-udp"))
+punch:value("ipv6-udp",translate("仅ipv6-udp"))
 
 comp = s:taboption("privacy",ListValue, "comp", translate("启用压缩"),
 	translate("启用压缩，默认仅支持lz4压缩，开启压缩后，如果数据包长度大于等于128，则会使用压缩，否则还是会按原数据发送<br>也支持zstd压缩，但是需要确认程序编译时是否添加支持zstd否则无法启动！编译参数--features zstd<br>如果宽度速度比较慢，可以考虑使用高级别的压缩"))
-comp:value("OFF")
+comp:value("OFF",translate("关闭"))
 comp:value("lz4")
 comp:value("zstd")
 
 passmode = s:taboption("privacy",ListValue, "passmode", translate("加密模式"),
 	translate("默认off不加密，通常情况aes_gcm安全性高、aes_ecb性能更好，在低性能设备上aes_ecb、chacha20、chacha20_poly1305、xor速度最快<br>注意：xor为数据混淆，并不是一种强大的加密算法，易被破解，因此不适合用于真正的加密需求"))
-passmode:value("off")
+passmode:value("off",translate("不加密"))
 passmode:value("aes_ecb")
 passmode:value("sm4_cbc")
 passmode:value("aes_cbc")
