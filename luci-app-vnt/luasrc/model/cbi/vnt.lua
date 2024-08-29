@@ -3,7 +3,7 @@ local http = luci.http
 local nixio = require "nixio"
 
 m = Map("vnt")
-m.description = translate('vnt是一个简便高效的异地组网、内网穿透工具。<br>官网：<a href="http://rustvnt.com/">rustvnt.com</a>&nbsp;&nbsp;项目地址：<a href="https://github.com/lbl8603/vnt">github.com/vnt-dev/vnt</a>&nbsp;&nbsp;安卓端、GUI：<a href="https://github.com/lbl8603/VntApp">VntApp</a>&nbsp;&nbsp;<a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o3Rr9xUWwAAnV9TkU_Nyj3yHNLs9k5F5&authKey=l1FKvqk7%2F256SK%2FHrw0PUhs%2Bar%2BtKYx0pLb7aiwBN9%2BKBCY8sOzWWEqtl4pdXAT7&noverify=0&group_code=1034868233">QQ群</a>')
+m.description = translate('vnt是一个简便高效的异地组网、内网穿透工具。<br>官网：<a href="http://rustvnt.com/">rustvnt.com</a>&nbsp;&nbsp;项目地址：<a href="https://github.com/vnt-dev/vnt">github.com/vnt-dev/vnt</a>&nbsp;&nbsp;安卓端、GUI：<a href="https://github.com/nt-dev/VntApp">VntApp</a>&nbsp;&nbsp;<a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o3Rr9xUWwAAnV9TkU_Nyj3yHNLs9k5F5&authKey=l1FKvqk7%2F256SK%2FHrw0PUhs%2Bar%2BtKYx0pLb7aiwBN9%2BKBCY8sOzWWEqtl4pdXAT7&noverify=0&group_code=1034868233">QQ群</a>')
 
 -- vnt-cli
 m:section(SimpleSection).template  = "vnt/vnt_status"
@@ -94,7 +94,6 @@ clibin.placeholder = "/usr/bin/vnt-cli"
 vntshost = s:taboption("privacy", Value, "vntshost", translate("vnts服务器地址"),
 	translate("相同的服务器，相同token的设备才会组成一个局域网<br>协议支持使用tcp://和ws://和wss://,默认为udp://"))
 vntshost.placeholder = "tcp://vnt.wherewego.top:29872"
-vntshost.password = true
 
 vntdns = s:taboption("privacy",DynamicList, "vntdns", translate("DNS服务器"),
 	translate("指定DNS服务器地址,可使用多个dns,不指定时使用系统解析"))
@@ -115,13 +114,8 @@ desvice_name = s:taboption("privacy", Value, "desvice_name", translate("设备�
 desvice_name.placeholder = device_name
 desvice_name.default = device_name
 
-tunmode = s:taboption("privacy",ListValue, "tunmode", translate("TUN/TAP网卡"),
-	translate("默认使用tun网卡，tun网卡效率更高"))
-tunmode:value("tun")
-tunmode:value("tap")
-
 tunname = s:taboption("privacy",Value, "tunname", translate("虚拟网卡名称"),
-	translate("自定义虚拟网卡的名称，在多开时虚拟网卡名称不能相同，默认：TUN模式为 vnt-tun ，TAP模式为 vnt-tap"))
+	translate("自定义虚拟网卡的名称，在多开时虚拟网卡名称不能相同，默认为 vnt-tun"))
 tunname.placeholder = "vnt-tun"
 
 relay = s:taboption("privacy",ListValue, "relay", translate("传输模式"),
@@ -142,10 +136,6 @@ mtu = s:taboption("privacy",Value, "mtu", translate("MTU"),
 	translate("设置虚拟网卡的mtu值，大多数情况下（留空）使用默认值效率会更高，也可根据实际情况进行微调，默认值：不加密1450，加密1410"))
 mtu.datatype = "range(1,1500)"
 mtu.placeholder = "1300"
-
-par = s:taboption("privacy",Value, "par", translate("并行任务数"),
-	translate("默认留空，任务并行度(必须为正整数),默认值为1,该值表示处理网卡读写的任务数,组网设备数较多、处理延迟较大时可适当调大此值"))
-par.placeholder = "2"
 
 punch = s:taboption("privacy",ListValue, "punch", translate("打洞模式"),
 	translate("选择只使用ipv4打洞或者只使用ipv6打洞，all都会使用,ipv6相对于ipv4速率可能会有所降低，ipv6更容易打通直连"))
