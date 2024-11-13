@@ -51,7 +51,7 @@ jobs:
              
              ![image](https://github.com/lmq8267/luci-app-vnt/assets/119713693/5094717e-a301-4411-9450-c8b64d4a3ade)
              如果 状态-系统日志里 出现上述日志可以使用以下命令解决
-             `sed -i 's/util/xml/' /usr/lib/lua/luci/model/cbi/vnt.lua`
+             `sed -i 's/util/xml/g' /usr/lib/lua/luci/model/cbi/vnt.lua`
 
              ${{ github.event.inputs.text }}
            
