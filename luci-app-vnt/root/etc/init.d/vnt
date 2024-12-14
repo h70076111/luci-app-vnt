@@ -101,47 +101,6 @@ start_vntcli() {
                 config_get desvice_name "$cfg" 'desvice_name'
                 config_get vntshost "$cfg" 'vntshost'
                 config_get local_dev "$cfg" 'local_dev'
-		#以下解析IP4P地址的脚本由恩山大佬liaohcai提供
-		if [ ! -z "$vntshost" ] ; then
-
-  			cas=$(echo $vntshost | grep -oE ':|/'| head -1)
-			case ${cas} in
- 			 :)  vntshost="$vntshost" 
-  
-  			;;
- 			# 原地址
-  			/) vntshost="`curl $vntshost`"
-
-			# 短链接
-			;;
-			* ) addr=$(curl -k -s "https://ipw.cn/api/dns/${vntshost}/AAAA/all" |  grep -o -i  "2001::[0-9a-fA-F:]\+" | head -n 1 )
-	
-			if [ ! -z "$(echo "$addr" | grep -o -i  "2001::[0-9a-fA-F:]\+")" ] ; then # 判断AAAA记录是不是IP4P地址  使用通断检测 服务器的虚拟ip 来定时检测ip变化
-				eval $(echo "$addr" | awk '/2001/'|cut -d ':' -f 1-6 | awk -F ':' '{print "port="$3" ipa="$4" ipb="$5 }')
-				port=$((0x$port))
-				ip1=$((0x${ipa:0:2}))
-				ip2=$((0x${ipa:2:2}))
-				ip3=$((0x${ipb:0:2}))
-				ip4=$((0x${ipb:2:2}))
-				ipv4="${ip1}.${ip2}.${ip3}.${ip4}:${port}"
-			
-			else
-				ip_port=$(curl -k -s "https://ipw.cn/api/dns/${ddns}/TXT/all" |  grep -oE '"Type":"TXT","recordValue":[^,}]*' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:[0-9]+' | head -n 1 ) 
-				if echo "$ip_port" | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}:[0-9]{1,5}$' &>/dev/null 2>&1 ; then  # 判断TXT记录是不是IP:PORT地址
-
-					ipv4="${ip_port}"
-
-				else
-					echo "$(date '+%Y-%m-%d %H:%M:%S') vnt-cli : "不是有效的IPv4地址:端口格式，请检查下服务地址" >>/tmp/vnt-cli.log
-					echo "退出"
-					exit 0
-				fi
-			fi
-			vntshost=${ipv4}
-	
-			;;
-			esac
-		fi
                 config_get stunhost "$cfg" 'stunhost'
                 config_get client_port "$cfg" 'client_port'
                 config_get punch "$cfg" 'punch' 'all'
