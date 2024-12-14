@@ -17,7 +17,7 @@ start_vntcli() {
                    clibin=/tmp/vnt-cli
                 fi
                 echo "$(date '+%Y-%m-%d %H:%M:%S') vnt-cli : vnt-cli_${cpucore}开始启动" >>/tmp/vnt-cli.log
-		echo "$(date '+%Y-%m-%d %H:%M:%S') vnt-cli : 若启动失败，请打开 状态 - 系统日志 找到vnt相关的字眼查看启动失败错误的原因" >>/tmp/vnts.log
+		echo "$(date '+%Y-%m-%d %H:%M:%S') vnt-cli : 若启动失败，请打开 状态 - 系统日志 找到vnt相关的字眼查看启动失败错误的原因" >>/tmp/vnt-cli.log
                 [ -z "`opkg list-installed | grep kmod-tun`" ] && echo "$(date '+%Y-%m-%d %H:%M:%S') vnt-cli : 未安装kmod-tun模块，	请确定安装好kmod-tun " >>/tmp/vnt-cli.log 
                 path=$(dirname "$clibin")
                 if [ -f /tmp/vnt-cli ] && [ "${path:0:4}" != "/tmp" ] ;then
