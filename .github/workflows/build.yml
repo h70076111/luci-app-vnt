@@ -24,7 +24,7 @@ jobs:
           wget -qO /opt/sdk.tar.xz https://downloads.openwrt.org/releases/22.03.5/targets/rockchip/armv8/openwrt-sdk-22.03.5-rockchip-armv8_gcc-11.2.0_musl.Linux-x86_64.tar.xz
           tar -xJf /opt/sdk.tar.xz -C /opt
           git clone https://github.com/lmq8267/luci-app-vnt.git /opt/vnt
-          sed -i 's/LUCI_DEPENDS:=+luci-lib-fs +kmod-tun/LUCI_DEPENDS:=/' /opt/vnt/luci-app-vnt/Makefile
+          #sed -i 's/LUCI_DEPENDS:=+kmod-tun/LUCI_DEPENDS:=/' /opt/vnt/luci-app-vnt/Makefile
           cd /opt/openwrt-sdk*/package
           cp -R /opt/vnt/luci-app-vnt .
           cd /opt/openwrt-sdk*
@@ -45,7 +45,7 @@ jobs:
             body: |
              > ### 编译时间 ：${{ env.build_time }}
 
-             需要先去系统自带的软件包里已经安装 _**luci**_ 和 _**luci-base**_ 和 _**luci-compat**_ 和 _**[luci-lib-fs](https://github.com/lmq8267/luci-app-vnt/releases/download/1.0.0/luci-lib-fs_1.0-1_all.ipk)**_ 和 _**kmod-tun**_ 再安装这个ipk才能显示界面
+             需要先去系统自带的软件包里已经安装 _**luci**_ 和 _**luci-base**_ 和 _**luci-compat**_ 和 _**kmod-tun**_ 再安装这个ipk才能显示界面
 
              安装完成后找不到界面入口的，请注销登录关闭当前浏览器窗口重新打开或重启路由器
              
