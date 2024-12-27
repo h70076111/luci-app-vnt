@@ -75,6 +75,7 @@ start_vntcli() {
 				chmod +x "$clibin"
  				if [ "$($clibin -h 2>&1 | wc -l)" -gt 3 ]; then
     					echo "$(date '+%Y-%m-%d %H:%M:%S') vnt-cli : ${clibin} 下载成功" >>/tmp/vnt-cli.log
+					break
  				else
    					uci -q set vnt.@vnt-cli[0].enabled=0
    					uci commit vnt
@@ -417,6 +418,7 @@ start_vnts() {
                   	if [ "$(($(/tmp/vnts -h 2>&1 | wc -l)))" -gt 3 ]; then
                     		echo "$(date '+%Y-%m-%d %H:%M:%S') vnts : /tmp/vnts 下载成功" >>/tmp/vnts.log
                     		mv -f /tmp/vnts "$vntsbin"
+				break
                  	else
                      		uci -q set vnt.@vnts[0].enabled=0
                      		uci commit vnt
