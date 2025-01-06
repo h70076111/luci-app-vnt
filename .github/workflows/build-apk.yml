@@ -135,4 +135,4 @@ jobs:
              ${{ github.event.inputs.text }}
            
             tag_name: ${{ env.TAG }}
-            files: /opt/openwrt-sdk*/bin/packages/aarch64_generic/base/*
+            files: /opt/outapk/*
