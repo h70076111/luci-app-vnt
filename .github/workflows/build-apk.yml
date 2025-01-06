@@ -21,24 +21,22 @@ jobs:
       - name: 下载工具链
         run: |
           sudo timedatectl set-timezone Asia/Shanghai
-          wget -qO /opt/sdk.tar.zst https://downloads.immortalwrt.org/snapshots/targets/qualcommax/ipq60xx/immortalwrt-sdk-qualcommax-ipq60xx_gcc-13.3.0_musl.Linux-x86_64.tar.zst
+          wget -qO /opt/sdk.tar.zst https://mirror-03.infra.openwrt.org/snapshots/targets/qualcommax/ipq60xx/openwrt-sdk-qualcommax-ipq60xx_gcc-13.3.0_musl.Linux-x86_64.tar.zst
           tar -I zstd -xf /opt/sdk.tar.zst -C /opt
           git clone https://github.com/lmq8267/luci-app-vnt.git /opt/vnt
           #sed -i 's/LUCI_DEPENDS:=+kmod-tun/LUCI_DEPENDS:=/' /opt/vnt/luci-app-vnt/Makefile
-          
-          cd /opt/immortalwrt-sdk*/package
+          cd /opt/openwrt-sdk*/package
           cp -R /opt/vnt/luci-app-vnt .
-          cd /opt/immortalwrt-sdk*
+          cd /opt/openwrt-sdk*
           ./scripts/feeds update -a
           make defconfig
       - name: 开始编译
         run: |
-          cd /opt/immortalwrt-sdk*
-          make package/luci-app-vnt/compile V=s -j1
-          find /opt/immortalwrt-sdk*/bin/packages -type f -name "*.apk"
-          cd /opt/immortalwrt-sdk*/bin/packages/aarch64_generic/base
+          cd /opt/openwrt-sdk*
+          make package/luci-app-vnt/compile -j1
+          cd /opt/openwrt-sdk*/bin/packages/aarch64_generic/base
           ls
-          
+          find /opt/openwrt-sdk*/bin/packages -type f -name "*.apk"
           mv *.ipk luci-app-vnt_all.ipk
           echo "build_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
       #- name: 发布
