@@ -35,9 +35,10 @@ jobs:
         run: |
           cd /opt/immortalwrt-sdk*
           make package/luci-app-vnt/compile V=s -j1
+          find /opt/immortalwrt-sdk*/bin/packages -type f -name "*.apk"
           cd /opt/immortalwrt-sdk*/bin/packages/aarch64_generic/base
           ls
-          find /opt/immortalwrt-sdk*/bin/packages -type f -name "*.apk"
+          
           mv *.ipk luci-app-vnt_all.ipk
           echo "build_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
       #- name: 发布
