@@ -34,6 +34,7 @@ jobs:
         run: |
           cd /opt/openwrt-sdk*
           make package/luci-app-vnt/compile -j1
+          find /opt/openwrt-sdk*/bin/packages -type f -name "*.apk"
           cd /opt/openwrt-sdk*/bin/packages/aarch64_generic/base
           ls
           find /opt/openwrt-sdk*/bin/packages -type f -name "*.apk"
