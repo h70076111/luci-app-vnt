@@ -35,10 +35,8 @@ jobs:
           cd /opt/openwrt-sdk*
           make package/luci-app-vnt/compile -j1
           find /opt/openwrt-sdk*/bin/packages -type f -name "*.apk"
-          cd /opt/openwrt-sdk*/bin/packages/aarch64_generic/base
-          ls
-          find /opt/openwrt-sdk*/bin/packages -type f -name "*.apk"
-          mv *.ipk luci-app-vnt_all.ipk
+          cd /opt/openwrt-sdk*/bin/packages/aarch64_cortex-a53/base/
+          mv *.apk luci-app-vnt_aarch64_cortex-a53.apk
           echo "build_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
       #- name: 发布
         #uses: softprops/action-gh-release@v1
