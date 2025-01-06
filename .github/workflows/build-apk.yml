@@ -25,19 +25,19 @@ jobs:
           tar -I zstd -xf /opt/sdk.tar.zst -C /opt
           git clone https://github.com/lmq8267/luci-app-vnt.git /opt/vnt
           #sed -i 's/LUCI_DEPENDS:=+kmod-tun/LUCI_DEPENDS:=/' /opt/vnt/luci-app-vnt/Makefile
-          ls /opt
-          cd /opt/openwrt-sdk*/package
+          
+          cd /opt/immortalwrt-sdk*/package
           cp -R /opt/vnt/luci-app-vnt .
-          cd /opt/openwrt-sdk*
+          cd /opt/immortalwrt-sdk*
           ./scripts/feeds update -a
           make defconfig
       - name: 开始编译
         run: |
-          cd /opt/openwrt-sdk*
+          cd /opt/immortalwrt-sdk*
           make package/luci-app-vnt/compile V=s -j1
-          cd /opt/openwrt-sdk*/bin/packages/aarch64_generic/base
+          cd /opt/immortalwrt-sdk*/bin/packages/aarch64_generic/base
           ls
-          find /opt/openwrt-sdk*/bin/packages -type f -name "*.apk"
+          find /opt/immortalwrt-sdk*/bin/packages -type f -name "*.apk"
           mv *.ipk luci-app-vnt_all.ipk
           echo "build_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
       #- name: 发布
