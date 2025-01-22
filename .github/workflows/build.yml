@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: '请填写发布的版本'
+        description: '请填写发布Releases的版本号（留空不发布）'
         required: false
         default: ''
       text:
