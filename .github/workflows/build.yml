@@ -67,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: luci-app-vnt_${{ matrix.APP }}
-          path: /opt/outapk/
+          path: /opt/out/
       
       - name: 发布
         if: ${{ github.event.inputs.tag != '' }}
