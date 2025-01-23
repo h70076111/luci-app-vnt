@@ -27,6 +27,10 @@ endif
 ifeq ($(ARCH),armv8)
 	APP_ARCH:=aarch64-unknown-linux-musl
 endif
+ifeq ($(ARCH),i386)
+	PKG_VERSION:=1.2.11
+	APP_ARCH:=i686-unknown-linux-musl
+endif
 ifeq ($(ARCH),x86_64)
 	APP_ARCH:=x86_64-unknown-linux-musl
 endif
@@ -39,7 +43,7 @@ define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=An efficient VPN 
-	DEPENDS:=@(x86_64||arm||aarch64||mipsel||mips)
+	DEPENDS:=@(i386||x86_64||arm||aarch64||mipsel||mips)
 	URL:=https://github.com/vnt-dev/vnts
 endef
 
