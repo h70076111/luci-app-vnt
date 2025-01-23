@@ -1,7 +1,3 @@
-#
-# This is free software, licensed under the Apache License, Version 2.0 .
-#
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vnt
@@ -46,16 +42,16 @@ define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=An efficient VPN 
-	DEPENDS:=@(i386||x86_64||arm||aarch64||mipsel||mips)
+	DEPENDS:=@(i386||x86_64||arm||aarch64||mipsel||mips) +kmod-tun
 	URL:=https://github.com/vnt-dev/vnt
 endef
 
 define Package/$(PKG_NAME)/description
-  An efficient VPN
+  简便高效的异地组网、内网穿透工具
 endef
 
 define Build/Prepare
-  [ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz ] && wget https://github.com/vnt-dev/vnt/releases/download/$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -O $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz
+	[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz ] && wget https://github.com/vnt-dev/vnt/releases/download/$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -O $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz
 	tar -xzvf $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -C $(PKG_BUILD_DIR)
 endef
 
@@ -64,7 +60,7 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
-  $(INSTALL_BIN) $(PKG_BUILD_DIR)/vnt-cli $(1)/usr/bin/vnt-cli
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/vnt-cli $(1)/usr/bin/vnt-cli
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
