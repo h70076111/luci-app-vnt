@@ -28,6 +28,7 @@ ifeq ($(ARCH),armv8)
 	APP_ARCH:=aarch64-unknown-linux-musl-v$(PKG_VERSION)
 endif
 ifeq ($(ARCH),i386)
+	PKG_VERSION:=1.2.11
 	APP_ARCH:=i686-unknown-linux-musl-1.2.11
 endif
 ifeq ($(ARCH),x86_64)
