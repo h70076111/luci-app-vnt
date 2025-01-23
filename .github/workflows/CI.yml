@@ -51,7 +51,7 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}-${{ matrix.sdk }}
           FEEDNAME: packages_ci
-          PACKAGES: luci-app-vnt
+          PACKAGES: luci-app-vnt vnt
           NO_REFRESH_CHECK: true
 
       - name: Upload artifacts
@@ -62,5 +62,6 @@ jobs:
 
       - name: Create compress files
         run: |
+          ls bin/packages/${{ matrix.arch }}/ packages_ci
           tar -zcvf ${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/ packages_ci
  
