@@ -4,35 +4,34 @@ PKG_NAME:=vnts
 PKG_VERSION:=1.2.12
 
 ifeq ($(ARCH),mipsel)
-	APP_ARCH:=mipsel-unknown-linux-musl
+	APP_ARCH:=mipsel-unknown-linux-musl-v$(PKG_VERSION)
 endif
 ifeq ($(ARCH),mips)
-	APP_ARCH:=mips-unknown-linux-musl
+	APP_ARCH:=mips-unknown-linux-musl-v$(PKG_VERSION)
 endif
 ifeq ($(ARCH),arm)
-	APP_ARCH:=arm-unknown-linux-musleabi
+	APP_ARCH:=arm-unknown-linux-musleabi-v$(PKG_VERSION)
 endif
 ifeq ($(BOARD),kirkwood)
-	APP_ARCH:=arm-unknown-linux-musleabi
+	APP_ARCH:=arm-unknown-linux-musleabi-v$(PKG_VERSION)
 endif
 ifeq ($(ARCH),armv7)
-	APP_ARCH:=armv7-unknown-linux-musleabi
+	APP_ARCH:=armv7-unknown-linux-musleabi-v$(PKG_VERSION)
 endif
 ifeq ($(ARCH),aarch64)
-	APP_ARCH:=aarch64-unknown-linux-musl
+	APP_ARCH:=aarch64-unknown-linux-musl-v$(PKG_VERSION)
 endif
 ifeq ($(ARCH),arm64)
-	APP_ARCH:=aarch64-unknown-linux-musl
+	APP_ARCH:=aarch64-unknown-linux-musl-v$(PKG_VERSION)
 endif
 ifeq ($(ARCH),armv8)
-	APP_ARCH:=aarch64-unknown-linux-musl
+	APP_ARCH:=aarch64-unknown-linux-musl-v$(PKG_VERSION)
 endif
 ifeq ($(ARCH),i386)
-	PKG_VERSION:=1.2.11
-	APP_ARCH:=i686-unknown-linux-musl
+	APP_ARCH:=i686-unknown-linux-musl-1.2.11
 endif
 ifeq ($(ARCH),x86_64)
-	APP_ARCH:=x86_64-unknown-linux-musl
+	APP_ARCH:=x86_64-unknown-linux-musl-v$(PKG_VERSION)
 endif
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
@@ -52,8 +51,8 @@ define Package/$(PKG_NAME)/description
 endef
 
 define Build/Prepare
-	[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/v$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH)-v$(PKG_VERSION).tar.gz -O $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz
-	tar -xzvf $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -C $(PKG_BUILD_DIR)
+	[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/v$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH).tar.gz -O $(PKG_NAME)-$(APP_ARCH).tar.gz
+	tar -xzvf $(PKG_NAME)-$(APP_ARCH).tar.gz -C $(PKG_BUILD_DIR)
 endef
 
 define Build/Compile
