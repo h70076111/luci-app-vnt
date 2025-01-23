@@ -4,35 +4,44 @@ PKG_NAME:=vnts
 PKG_VERSION:=1.2.12
 
 ifeq ($(ARCH),mipsel)
-	APP_ARCH:=mipsel-unknown-linux-musl-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=mipsel-unknown-linux-musl-$(PKG_VERSION)
 endif
 ifeq ($(ARCH),mips)
-	APP_ARCH:=mips-unknown-linux-musl-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=mips-unknown-linux-musl-$(PKG_VERSION)
 endif
 ifeq ($(ARCH),arm)
-	APP_ARCH:=arm-unknown-linux-musleabi-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=arm-unknown-linux-musleabi-$(PKG_VERSION)
 endif
 ifeq ($(BOARD),kirkwood)
-	APP_ARCH:=arm-unknown-linux-musleabi-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=arm-unknown-linux-musleabi-$(PKG_VERSION)
 endif
 ifeq ($(ARCH),armv7)
-	APP_ARCH:=armv7-unknown-linux-musleabi-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=armv7-unknown-linux-musleabi-$(PKG_VERSION)
 endif
 ifeq ($(ARCH),aarch64)
-	APP_ARCH:=aarch64-unknown-linux-musl-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=aarch64-unknown-linux-musl-$(PKG_VERSION)
 endif
 ifeq ($(ARCH),arm64)
-	APP_ARCH:=aarch64-unknown-linux-musl-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=aarch64-unknown-linux-musl-$(PKG_VERSION)
 endif
 ifeq ($(ARCH),armv8)
-	APP_ARCH:=aarch64-unknown-linux-musl-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=aarch64-unknown-linux-musl-$(PKG_VERSION)
 endif
 ifeq ($(ARCH),i386)
 	PKG_VERSION:=1.2.11
-	APP_ARCH:=i686-unknown-linux-musl-1.2.11
+	APP_ARCH:=i686-unknown-linux-musl-$(PKG_VERSION)
 endif
 ifeq ($(ARCH),x86_64)
-	APP_ARCH:=x86_64-unknown-linux-musl-v$(PKG_VERSION)
+	PKG_VERSION:=v$(PKG_VERSION)
+	APP_ARCH:=x86_64-unknown-linux-musl-$(PKG_VERSION)
 endif
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
