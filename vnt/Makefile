@@ -6,7 +6,6 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vnt
 PKG_VERSION:=v1.2.15
-PKG_RELEASE:=
 
 ifeq ($(ARCH),mipsel)
 	APP_ARCH:=mipsel-unknown-linux-musl
@@ -52,7 +51,7 @@ define Package/$(PKG_NAME)
 endef
 
 define Package/$(PKG_NAME)/description
-  简便高效的异地组网、内网穿透工具
+  An efficient VPN
 endef
 
 define Build/Prepare
