@@ -40,6 +40,7 @@ jobs:
           - x86_64
         sdk:
           - openwrt-22.03
+          - openwrt-snapshots
 
     steps:
       - uses: actions/checkout@v4
@@ -55,13 +56,12 @@ jobs:
           NO_REFRESH_CHECK: true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.arch }}
-          path: bin/packages/${{ matrix.arch }}/packages_ci/*
+          path: bin/packages/${{ matrix.arch }}/packages_ci/
 
       - name: Create compress files
         run: |
-          ls bin/packages/${{ matrix.arch }}/packages_ci
           tar -zcvf ${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/ packages_ci
  
