@@ -27,9 +27,6 @@ endif
 ifeq ($(ARCH),armv8)
 	APP_ARCH:=aarch64-unknown-linux-musl
 endif
-ifeq ($(ARCH),i386)
-	APP_ARCH:=
-endif
 ifeq ($(ARCH),x86_64)
 	APP_ARCH:=x86_64-unknown-linux-musl
 endif
@@ -51,17 +48,14 @@ define Package/$(PKG_NAME)/description
 endef
 
 define Build/Prepare
-  	[ "$(ARCH)" = "i386" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
 	[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/v$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -O $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz
 	tar -xzvf $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -C $(PKG_BUILD_DIR)
 endef
 
 define Build/Compile
-  	[ "$(ARCH)" = "i386" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
 endef
 
 define Package/$(PKG_NAME)/install
-  	[ "$(ARCH)" = "i386" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/vnts $(1)/usr/bin/vnts
 endef
