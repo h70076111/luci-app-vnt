@@ -52,7 +52,7 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}-${{ matrix.sdk }}
           FEEDNAME: packages_ci
-          PACKAGES: vnt
+          PACKAGES: vnts
           V: s
           NO_REFRESH_CHECK: true
 
