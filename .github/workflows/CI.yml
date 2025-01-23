@@ -58,10 +58,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.arch }}
-          path: bin/packages/${{ matrix.arch }}/packages_ci/*.ipk
+          path: bin/packages/${{ matrix.arch }}/packages_ci/*
 
       - name: Create compress files
         run: |
-          ls bin/packages/${{ matrix.arch }}/ packages_ci
+          ls bin/packages/${{ matrix.arch }}/packages_ci
           tar -zcvf ${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/ packages_ci
  
