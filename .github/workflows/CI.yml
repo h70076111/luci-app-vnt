@@ -1,4 +1,4 @@
-name: Build
+name: Build-OpenWrt-VNT
 
 on:
   workflow_dispatch:
@@ -79,7 +79,7 @@ jobs:
           #tar -zcvf vnt-${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/ packages_ci
           zip -j vnt-${{ matrix.sdk }}-${{ matrix.arch }}.zip bin/packages/${{ matrix.arch }}/packages_ci/*
 
-      - name: 发布
+      - name: Release
         if: ${{ github.event.inputs.tag != '' }}
         uses: softprops/action-gh-release@v2
         with:
