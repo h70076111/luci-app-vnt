@@ -51,7 +51,7 @@ jobs:
           - mipsel_mips32
           - x86_64
         sdk:
-          #- openwrt-22.03
+          - openwrt-22.03
           - SNAPSHOT
 
     steps:
@@ -66,7 +66,7 @@ jobs:
           FEEDNAME: packages_ci
           PACKAGES: vnt vnts luci-app-vnt
           NO_REFRESH_CHECK: true
-          V: s
+          #V: s
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
