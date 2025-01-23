@@ -4,44 +4,35 @@ PKG_NAME:=vnts
 PKG_VERSION:=1.2.12
 
 ifeq ($(ARCH),mipsel)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=mipsel-unknown-linux-musl-$(PKG_VERSION)
+	APP_ARCH:=mipsel-unknown-linux-musl
 endif
 ifeq ($(ARCH),mips)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=mips-unknown-linux-musl-$(PKG_VERSION)
+	APP_ARCH:=mips-unknown-linux-musl
 endif
 ifeq ($(ARCH),arm)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=arm-unknown-linux-musleabi-$(PKG_VERSION)
+	APP_ARCH:=arm-unknown-linux-musleabi
 endif
 ifeq ($(BOARD),kirkwood)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=arm-unknown-linux-musleabi-$(PKG_VERSION)
+	APP_ARCH:=arm-unknown-linux-musleabi
 endif
 ifeq ($(ARCH),armv7)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=armv7-unknown-linux-musleabi-$(PKG_VERSION)
+	APP_ARCH:=armv7-unknown-linux-musleabi
 endif
 ifeq ($(ARCH),aarch64)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=aarch64-unknown-linux-musl-$(PKG_VERSION)
+	APP_ARCH:=aarch64-unknown-linux-musl
 endif
 ifeq ($(ARCH),arm64)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=aarch64-unknown-linux-musl-$(PKG_VERSION)
+	APP_ARCH:=aarch64-unknown-linux-musl
 endif
 ifeq ($(ARCH),armv8)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=aarch64-unknown-linux-musl-$(PKG_VERSION)
+	APP_ARCH:=aarch64-unknown-linux-musl
 endif
 ifeq ($(ARCH),i386)
 	PKG_VERSION:=1.2.11
-	APP_ARCH:=i686-unknown-linux-musl-$(PKG_VERSION)
+	APP_ARCH:=i686-unknown-linux-musl
 endif
 ifeq ($(ARCH),x86_64)
-	PKG_VERSION:=v$(PKG_VERSION)
-	APP_ARCH:=x86_64-unknown-linux-musl-$(PKG_VERSION)
+	APP_ARCH:=x86_64-unknown-linux-musl
 endif
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
@@ -61,7 +52,11 @@ define Package/$(PKG_NAME)/description
 endef
 
 define Build/Prepare
-	[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH).tar.gz -O $(PKG_NAME)-$(APP_ARCH).tar.gz
+	ifeq ($(APP_ARCH),i386)
+		[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -O $(PKG_NAME)-$(APP_ARCH).tar.gz
+	else
+		[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/v$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH)-v$(PKG_VERSION).tar.gz -O $(PKG_NAME)-$(APP_ARCH).tar.gz
+	endif
 	tar -xzvf $(PKG_NAME)-$(APP_ARCH).tar.gz -C $(PKG_BUILD_DIR)
 endef
 
