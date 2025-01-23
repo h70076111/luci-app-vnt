@@ -71,13 +71,13 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.arch }}-${{ matrix.sdk }}
+          name: VNT-${{ matrix.arch }}-${{ matrix.sdk }}
           path: bin/packages/${{ matrix.arch }}/packages_ci/
 
       - name: Create compress files
         run: |
           #tar -zcvf vnt-${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/ packages_ci
-          zip -j vnt-${{ matrix.sdk }}-${{ matrix.arch }}.zip bin/packages/${{ matrix.arch }}/packages_ci/*
+          zip -j vnt-${{ matrix.arch }}-${{ matrix.sdk }}.zip bin/packages/${{ matrix.arch }}/packages_ci/*
 
       - name: Release
         if: ${{ github.event.inputs.tag != '' }}
@@ -103,5 +103,5 @@ jobs:
              ${{ github.event.inputs.text }}
            
             tag_name: ${{ env.TAG }}
-            files: vnt-${{ matrix.sdk }}-${{ matrix.arch }}.zip
+            files: vnt-${{ matrix.arch }}-${{ matrix.sdk }}.zip
  
