@@ -47,7 +47,7 @@ define Package/$(PKG_NAME)
 endef
 
 define Package/$(PKG_NAME)/description
-  简便高效的异地组网、内网穿透工具
+  简便高效的异地组网、内网穿透工具（客户端）
 endef
 
 define Build/Prepare
