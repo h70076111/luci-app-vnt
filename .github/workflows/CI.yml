@@ -2,8 +2,20 @@ name: Build
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: '请填写发布Releases的版本号（留空不发布）'
+        required: false
+        default: ''
+      text:
+        description: '请填写发布的说明'
+        required: false
+        default: ''
 env:
+  TAG: "${{ github.event.inputs.tag }}"
   TZ: Asia/Shanghai
+permissions:
+  contents: write
 jobs:
   build:
     name: Build ${{ matrix.arch }}-${{ matrix.sdk }}
@@ -52,9 +64,9 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}-${{ matrix.sdk }}
           FEEDNAME: packages_ci
-          PACKAGES: vnts
-          V: s
+          PACKAGES: vnt vnts luci-app-vnt
           NO_REFRESH_CHECK: true
+          #V: s
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -64,5 +76,30 @@ jobs:
 
       - name: Create compress files
         run: |
-          tar -zcvf ${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/ packages_ci
+          #tar -zcvf vnt-${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/ packages_ci
+          zip -r vnt-${{ matrix.sdk }}-${{ matrix.arch }}.zip bin/packages/${{ matrix.arch }}/packages_ci
+
+      - name: 发布
+        if: ${{ github.event.inputs.tag != '' }}
+        uses: softprops/action-gh-release@v2
+        with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            body: |
+             > ### 编译时间 ：${{ env.build_time }}
+
+             - 需要先去系统自带的软件包里已经安装 _**luci**_ 和 _**luci-base**_ 和 _**luci-compat**_ 和 _**kmod-tun**_ 再安装这个ipk或apk才能显示界面
+
+             - 安装完成后找不到界面入口的，请注销登录关闭当前浏览器窗口重新打开或重启路由器
+             
+             - 如果 状态-系统日志里 出现下图日志内容可以使用以下命令解决
+             ![image](https://github.com/lmq8267/luci-app-vnt/assets/119713693/5094717e-a301-4411-9450-c8b64d4a3ade)
+             `sed -i 's/util/xml/g' /usr/lib/lua/luci/model/cbi/vnt.lua`
+
+             - **`luci-app-vnt-*.apk` 是OpenWrt新版的APK包** 对于apk包跳过证书命令
+             `apk add --allow-untrusted luci-app-vnt.apk`
+
+             ${{ github.event.inputs.text }}
+           
+            tag_name: ${{ env.TAG }}
+            files: vnt-${{ matrix.sdk }}-${{ matrix.arch }}.zip
  
