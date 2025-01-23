@@ -61,7 +61,7 @@ define Package/$(PKG_NAME)/description
 endef
 
 define Build/Prepare
-	[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/v$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH).tar.gz -O $(PKG_NAME)-$(APP_ARCH).tar.gz
+	[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH).tar.gz -O $(PKG_NAME)-$(APP_ARCH).tar.gz
 	tar -xzvf $(PKG_NAME)-$(APP_ARCH).tar.gz -C $(PKG_BUILD_DIR)
 endef
 
