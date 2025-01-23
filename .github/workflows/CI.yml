@@ -87,6 +87,8 @@ jobs:
             body: |
              > ### 编译时间 ：${{ env.build_time }}
 
+             - 其中 **`openwrt-22.03`** 里面是ipk安装包 **`SNAPSHOT`** 里面是apk安装包
+             
              - 需要先去系统自带的软件包里已经安装 _**luci**_ 和 _**luci-base**_ 和 _**luci-compat**_ 和 _**kmod-tun**_ 再安装这个ipk或apk才能显示界面
 
              - 安装完成后找不到界面入口的，请注销登录关闭当前浏览器窗口重新打开或重启路由器
@@ -95,7 +97,7 @@ jobs:
              ![image](https://github.com/lmq8267/luci-app-vnt/assets/119713693/5094717e-a301-4411-9450-c8b64d4a3ade)
              `sed -i 's/util/xml/g' /usr/lib/lua/luci/model/cbi/vnt.lua`
 
-             - **`luci-app-vnt-*.apk` 是OpenWrt新版的APK包** 对于apk包跳过证书命令
+             - **`*.apk` 是OpenWrt新版的APK包** 对于apk包跳过证书命令
              `apk add --allow-untrusted luci-app-vnt.apk`
 
              ${{ github.event.inputs.text }}
