@@ -42,7 +42,7 @@ define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=An efficient VPN 
-	DEPENDS:=@(i386||x86_64||arm||aarch64||mipsel||mips)
+	DEPENDS:=@(x86_64||arm||aarch64||mipsel||mips)
 	URL:=https://github.com/vnt-dev/vnts
 endef
 
@@ -51,17 +51,17 @@ define Package/$(PKG_NAME)/description
 endef
 
 define Build/Prepare
-  [ -z "$(APP_ARCH)" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
+  	[ "$(ARCH)" = "i386" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
 	[ ! -f $(PKG_BUILD_DIR)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz ] && wget https://github.com/vnt-dev/vnts/releases/download/v$(PKG_VERSION)/$(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -O $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz
 	tar -xzvf $(PKG_NAME)-$(APP_ARCH)-$(PKG_VERSION).tar.gz -C $(PKG_BUILD_DIR)
 endef
 
 define Build/Compile
-  [ -z "$(APP_ARCH)" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
+  	[ "$(ARCH)" = "i386" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
 endef
 
 define Package/$(PKG_NAME)/install
-  [ -z "$(APP_ARCH)" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
+  	[ "$(ARCH)" = "i386" ] && echo "$(ARCH) 暂无此架构的程序！跳过" && exit 0
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/vnts $(1)/usr/bin/vnts
 endef
