@@ -52,7 +52,8 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}-${{ matrix.sdk }}
           FEEDNAME: packages_ci
-          PACKAGES: luci-app-vnt vnt
+          PACKAGES: vnt
+          V: s
           NO_REFRESH_CHECK: true
 
       - name: Upload artifacts
