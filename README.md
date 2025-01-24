@@ -54,6 +54,18 @@ apk add --allow-untrusted luci-app-vnt.apk
     make package/vnt/vnts/compile V=s
  ```
 
+##
+
+> 如果 状态-系统日志里 出现下图日志内容可以使用以下命令解决
+
+<p><img width="500" alt="" src="./Image/xml.png"></p>
+
+```
+sed -i 's/util/xml/g' /usr/lib/lua/luci/model/cbi/vnt.lua
+```
+
+##
+
 ### UI预览 ###
 ![](./Image/主界面23-11-07.png)
 ![](./Image/服务端23-11-07.png)
